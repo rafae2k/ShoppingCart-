@@ -13,4 +13,12 @@ describe('2 - Teste a função fecthItem', () => {
     await fetchItem('MLB1615760527');
     expect(fetch).toHaveBeenCalled();
   });
+  it('3. Ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: You must provide an url.', async () => {
+    expect.assertions(1);
+    try {
+      await fetchItem();
+    } catch (error) {
+      expect(error).toEqual(new Error('Produto não encontrado'));
+    }
+  });
 });
