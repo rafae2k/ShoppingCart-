@@ -16,6 +16,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   cartItems.removeChild(event.target);
+  saveCartItems(cartItems.innerHTML);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -26,11 +27,12 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 
   cartItems.appendChild(li);
 
+  saveCartItems(cartItems.innerHTML);
+
   return li;
 }
 
 const handleAddToCart = async (sku) => {
-  const items = document.querySelectorAll('.cart__items');
   const item = await fetchItem(sku);
   createCartItemElement(item);
 };
@@ -65,6 +67,15 @@ const renderItems = async () => {
   results.forEach((product) => createProductItemElement(product));
 };
 
-window.onload = () => {
-  renderItems();
+const handleCartLocalStorage = async () => {
+  if (getSavedCartItems('cartItems')) {
+    const skuRegex = /[\dA-Z]{13}/g;
+    const sku = getSavedCartItems('cartItems').match(skuRegex);
+    await sku.forEach((item) => handleAddToCart(item));
+  }
+};
+
+window.onload = async () => {
+  await handleCartLocalStorage();
+  await renderItems();
 };
