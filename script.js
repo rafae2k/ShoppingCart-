@@ -67,15 +67,13 @@ const renderItems = async () => {
   results.forEach((product) => createProductItemElement(product));
 };
 
-const handleCartLocalStorage = async () => {
-  if (getSavedCartItems('cartItems')) {
-    const skuRegex = /[\dA-Z]{13}/g;
-    const sku = getSavedCartItems('cartItems').match(skuRegex);
-    await sku.forEach((item) => handleAddToCart(item));
-  }
+const handleCartLocalStorage = () => {
+  cartItems.innerHTML = getSavedCartItems('cartItems');
+  const li = document.querySelectorAll('.cart__item');
+  li.forEach((item) => item.addEventListener('click', cartItemClickListener));
 };
 
-window.onload = async () => {
-  await handleCartLocalStorage();
-  await renderItems();
+window.onload = () => {
+  handleCartLocalStorage();
+  renderItems();
 };
