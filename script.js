@@ -1,5 +1,3 @@
-const items = document.querySelector('.items');
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -15,6 +13,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+  const items = document.querySelector('.items');
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -24,6 +23,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(
     createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
   );
+  items.appendChild(section);
 
   return section;
 }
@@ -46,9 +46,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 const renderItems = async () => {
   const { results } = await fetchProducts('computador');
-  results.forEach((product) => {
-    items.appendChild(createProductItemElement(product));
-  });
+  results.forEach((product) => createProductItemElement(product));
 };
 
 window.onload = () => {
