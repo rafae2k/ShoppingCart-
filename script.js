@@ -1,6 +1,12 @@
 const cartItems = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
+const emptyCart = document.querySelector('.empty-cart');
 let total = 0;
+
+emptyCart.addEventListener('click', () => {
+  cartItems.innerHTML = '';
+  totalPrice.innerText = 0;
+});
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
