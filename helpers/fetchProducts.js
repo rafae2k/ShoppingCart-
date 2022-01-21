@@ -4,7 +4,7 @@ const fetchProducts = async (product) => {
   try {
     const response = await fetch(productURL);
     const data = await response.json();
-    return data.results;
+    return data;
   } catch (error) {
     throw new Error('Produto não encontrado');
   }
