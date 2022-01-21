@@ -84,7 +84,16 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 }
 
 const renderItems = async () => {
+  const items = document.querySelector('.items');
+  const loading = document.createElement('div');
+  loading.className = 'loading';
+  loading.innerText = 'Carregando...';
+  items.appendChild(loading);
+
   const { results } = await fetchProducts('computador');
+
+  items.removeChild(loading);
+
   results.forEach((product) => createProductItemElement(product));
 };
 
